@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Amma ❤️</title>
+<style>
+:root{--pink:#ff5f91;--gold:#ffd36e;--ink:#4b2340}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Georgia,serif;color:var(--ink);background:radial-gradient(circle at top,#fff2f7,#ffe2ec 48%,#f8c9dc);display:flex;align-items:center;justify-content:center;padding:22px;overflow-x:hidden}
+.wrap{width:min(760px,100%);text-align:center}
+.card{background:#ffffffdf;border:1px solid #fff;border-radius:28px;padding:clamp(22px,5vw,42px);box-shadow:0 18px 55px #9d416b26;position:relative}
+.heart{font-size:44px;animation:pulse 1.4s infinite}.eyebrow{letter-spacing:3px;text-transform:uppercase;font: bold 12px Arial;color:#c34c7b}
+h1{font-size:clamp(30px,7vw,52px);margin:10px 0;color:#b52e69} .sub{font:15px Arial;line-height:1.7;color:#81556d}
+.game{margin:24px auto 12px;background:linear-gradient(135deg,#fff7fb,#ffe8f0);border-radius:22px;padding:24px;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+.counter{font: bold 12px Arial;letter-spacing:2px;color:#c45b85}
+.quote{font-size:clamp(21px,4vw,30px);line-height:1.45;margin:18px 0;color:#692d4c}
+button{border:0;border-radius:30px;padding:13px 22px;margin:6px;background:var(--pink);color:white;font-weight:bold;font-size:14px;cursor:pointer;box-shadow:0 6px 16px #d94f8733}
+button.secondary{background:#fff;color:#b52e69;border:1px solid #f2b5ce;box-shadow:none}
+button:active{transform:scale(.98)} .actions{display:flex;justify-content:center;flex-wrap:wrap}
+#qrArea{display:none;margin:18px auto 0;padding:16px;background:white;border-radius:18px;max-width:320px}
+#qrArea img{width:190px;height:190px;display:block;margin:12px auto}
+input{width:min(420px,100%);padding:12px;border:1px solid #e9abc5;border-radius:12px;font-size:14px}
+.qrtools{margin-top:26px;padding-top:20px;border-top:1px solid #f1c7d8}
+.small{font:12px Arial;color:#966c80;line-height:1.6}
+footer{font:12px Arial;color:#a36b84;margin:18px}
+.spark{position:fixed;top:-20px;font-size:18px;pointer-events:none;animation:fall 5s linear forwards}
+@keyframes pulse{50%{transform:scale(1.12)}}@keyframes fall{to{transform:translateY(110vh) rotate(420deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <main class="card">
+  <div class="heart">💗</div>
+  <div class="eyebrow">A little surprise made with love</div>
+  <h1>Happy Birthday, Amma!</h1>
+  <p class="sub">One birthday wish, five little messages, and endless love.<br>Tap the button to open each surprise. 💐</p>
+  <section class="game">
+   <div class="counter" id="counter">YOUR FIRST WISH</div>
+   <div class="quote" id="quote">Wish you many more happy returns of the day Amma ❤️</div>
+   <div class="small" id="hint">Your love is my favourite blessing.</div>
+  </section>
+  <div class="actions">
+   <button id="next">Open the next wish ✨</button>
+   <button class="secondary" id="music">▶ Play a little birthday tune</button>
+   <button class="secondary" id="again">Start again ↻</button>
+  </div>
+  <div class="qrtools">
+   <h3>📱 Make a QR code for each wish</h3>
+   <p class="small">After you publish this page online, paste its public link below. Then each QR code will open its own birthday message.</p>
+   <input id="siteUrl" type="url" placeholder="Paste your published website link (https://...)">
+   <div><button class="secondary" id="makeQr">Create QR for this wish</button></div>
+   <div id="qrArea"><div id="qrLabel" class="small"></div><img id="qrImage" alt="QR code"><a id="qrDownload" download="amma-birthday-qr.png">Download this QR code</a></div>
+  </div>
+ </main>
+ <footer>Made with all my love, Amma. ❤️</footer>
+</div>
+<script>
+const wishes = [
+ {title:"YOUR FIRST WISH",text:"Wish you many more happy returns of the day Amma ❤️",hint:"Your love is my favourite blessing."},
+ {title:"WISH 2 OF 5",text:"Amma, your hugs are my safest home, and your smile is my brightest sunshine. May life return all the love you give. 🌷",hint:"A mother's love makes every ordinary day beautiful."},
+ {title:"WISH 3 OF 5",text:"You are the quiet strength behind my dreams and the beautiful reason behind so many of my smiles. Keep shining, Amma. ✨",hint:"Your kindness is a gift I carry everywhere."},
+ {title:"WISH 4 OF 5",text:"May every morning bring you peace, every evening bring you happiness, and every year bring you more reasons to smile. 💖",hint:"You deserve a lifetime of little joys."},
+ {title:"WISH 5 OF 5",text:"No words can measure what you mean to me. If I could choose a blessing again, I would choose you as my Amma in every lifetime. 🥹❤️",hint:"Forever grateful. Forever your child."}
+];
+let index=0;
+const quote=document.getElementById('quote'), counter=document.getElementById('counter'), hint=document.getElementById('hint');
+function show(){const w=wishes[index];quote.textContent=w.text;counter.textContent=w.title;hint.textContent=w.hint;document.getElementById('qrArea').style.display='none';burst();}
+function burst(){for(let i=0;i<12;i++){let s=document.createElement('span');s.className='spark';s.textContent=['💗','✨','🌸','💕'][Math.floor(Math.random()*4)];s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),6000)}}
+document.getElementById('next').onclick=()=>{index=(index+1)%wishes.length;show();};
+document.getElementById('again').onclick=()=>{index=0;show();};
+let audioCtx=null, playing=false, timer=null;
+function playTune(){
+ if(playing){clearInterval(timer);playing=false;document.getElementById('music').textContent='▶ Play a little birthday tune';return;}
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC){alert('Audio is not supported in this browser.');return;}
+ audioCtx=audioCtx||new AC();audioCtx.resume();playing=true;document.getElementById('music').textContent='Ⅱ Stop the tune';
+ const notes=[523.25,523.25,587.33,523.25,698.46,659.25,523.25,523.25,587.33,523.25,783.99,698.46];
+ let n=0;function note(){if(!playing)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=notes[n%notes.length];g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.12,audioCtx.currentTime+.03);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.38);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.4);n++;}
+ note();timer=setInterval(note,430);
+}
+document.getElementById('music').onclick=playTune;
+document.getElementById('makeQr').onclick=()=>{
+ const base=document.getElementById('siteUrl').value.trim();
+ if(!/^https?:\/\//i.test(base)){alert('First paste your published website link (starting with https://).');return;}
+ const url=new URL(base);url.searchParams.set('wish',String(index+1));
+ const qr='https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+encodeURIComponent(url.toString());
+ const img=document.getElementById('qrImage');img.src=qr;
+ document.getElementById('qrLabel').textContent='QR code for '+wishes[index].title;
+ document.getElementById('qrDownload').href=qr;
+ document.getElementById('qrArea').style.display='block';
+};
+const params=new URLSearchParams(location.search), requested=parseInt(params.get('wish')||'1',10);
+if(requested>=1&&requested<=5)index=requested-1;
+show();
+</script>
+</body></html>
